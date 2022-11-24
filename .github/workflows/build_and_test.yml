@@ -1,0 +1,57 @@
+name: "Networking Recipe CI Build pipeline"
+
+on:
+  push:
+    branches:
+      - main
+      - github-actions
+  pull_request:
+    branches:
+      - main
+      - github-actions
+      
+concurrency:
+  # if workflow for PR or push is already running stop it, and start new one
+  group: build_and_test-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build_and_test:
+    timeout-minutes: 100
+    runs-on: ubuntu-22.04
+    steps:
+      - name: 'checkout p4-dpdk repo'
+        uses: actions/checkout@v3
+        with:
+          repository: p4lang/p4-dpdk-target
+          submodules: 'recursive'
+          path: p4sde
+
+      - name: 'Install dependencies'
+        working-directory: ./p4sde/tools/setup
+        run: |
+              sudo apt update -y
+              python install_dep.py
+      - name: 'Compile p4sde dpdk target'
+        run: |
+             export SDE=${GITHUB_WORKSPACE}
+             mkdir install
+             export SDE_INSTALL=${GITHUB_WORKSPACE}/install
+             cd ${GITHUB_WORKSPACE}
+             ./autogen.sh
+             ./configure --prefix=$SDE_INSTALL
+             make 
+             make install
+      - name: 'checkout Networking Recipe'
+        uses: actions/checkout@v3
+        with:
+          submodules: 'recursive'
+          path: ipdk.recipe
+      - name: 'Build and install infrap4d dependencies'
+        run: |
+             cd ${GITHUB_WORKSPACE}/ipdk.recipe
+             export IPDK_RECIPE=`pwd`
+             cd $IPDK_RECIPE/setup
+             cmake -B build -DCMAKE_INSTALL_PREFIX=${GITHUB_WORKSPACE}/ipdk.recipe/deps -DUSE_SUDO=ON
+             cmake --build build -j
+         
