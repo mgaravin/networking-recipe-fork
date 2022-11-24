@@ -34,9 +34,9 @@ jobs:
               python install_dep.py
       - name: 'Compile p4sde dpdk target'
         run: |
-             export SDE=${GITHUB_WORKSPACE}
+             export SDE=${GITHUB_WORKSPACE}/p4sde
              mkdir install
-             export SDE_INSTALL=${GITHUB_WORKSPACE}/install
+             export SDE_INSTALL=${GITHUB_WORKSPACE}/p4sde/install
              cd ${GITHUB_WORKSPACE}
              ./autogen.sh
              ./configure --prefix=$SDE_INSTALL
@@ -54,4 +54,3 @@ jobs:
              cd $IPDK_RECIPE/setup
              cmake -B build -DCMAKE_INSTALL_PREFIX=${GITHUB_WORKSPACE}/ipdk.recipe/deps -DUSE_SUDO=ON
              cmake --build build -j
-         
