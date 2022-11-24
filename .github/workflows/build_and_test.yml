@@ -52,5 +52,6 @@ jobs:
              cd ${GITHUB_WORKSPACE}/ipdk.recipe
              export IPDK_RECIPE=`pwd`
              cd $IPDK_RECIPE/setup
-             cmake -B build -DCMAKE_INSTALL_PREFIX=$IPDK_RECIPE/deps -DUSE_SUDO=ON
-             cmake --build build -j
+             mkdir -p $IPDK_RECIPE/deps
+             cmake -B build -DCMAKE_INSTALL_PREFIX=$IPDK_RECIPE/deps
+             cmake --build build -j2
