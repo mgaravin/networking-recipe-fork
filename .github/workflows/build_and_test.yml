@@ -37,7 +37,7 @@ jobs:
              export SDE=${GITHUB_WORKSPACE}/p4sde
              mkdir install
              export SDE_INSTALL=${GITHUB_WORKSPACE}/p4sde/install
-             cd ${GITHUB_WORKSPACE}
+             cd $SDE
              ./autogen.sh
              ./configure --prefix=$SDE_INSTALL
              make 
@@ -52,5 +52,5 @@ jobs:
              cd ${GITHUB_WORKSPACE}/ipdk.recipe
              export IPDK_RECIPE=`pwd`
              cd $IPDK_RECIPE/setup
-             cmake -B build -DCMAKE_INSTALL_PREFIX=${GITHUB_WORKSPACE}/ipdk.recipe/deps -DUSE_SUDO=ON
+             cmake -B build -DCMAKE_INSTALL_PREFIX=$IPDK_RECIPE/deps -DUSE_SUDO=ON
              cmake --build build -j
