@@ -81,5 +81,5 @@ jobs:
              export IPDK_RECIPE=`pwd`
              cd $IPDK_RECIPE/setup
              mkdir -p $IPDK_RECIPE/deps
-             cmake -B build -DCMAKE_INSTALL_PREFIX=$IPDK_RECIPE/deps
-             cmake --build build -j2
+             cmake -B build -DCMAKE_INSTALL_PREFIX=$IPDK_RECIPE/deps -DUSE_SUDO=ON
+             cmake --build build -j 
