@@ -16,34 +16,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  c-linter:
-    name: c-linter
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v3
 
-      - name: Install ClangFormat
-        run: sudo apt-get install -y clang-format
-
-      - name: Run linters
-        uses: wearerequired/lint-action@v2
-        with:
-          clang_format: true
-  cpp-linter:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: cpp-linter/cpp-linter-action@v2
-        id: linter
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          style: file
-
-      - name: Fail fast?!
-        if: steps.linter.outputs.checks-failed > 0
-        run: echo "Some files failed the linting checks!"
   build_and_test:
     timeout-minutes: 100
     runs-on: ubuntu-latest
@@ -76,4 +49,5 @@ jobs:
              cd $IPDK_RECIPE/setup
              mkdir -p $IPDK_RECIPE/deps
              cmake -B build -DCMAKE_INSTALL_PREFIX=$IPDK_RECIPE/deps -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DUSE_SUDO=ON
-             cmake --build build -j
+             make VERBOSE=1 -j1
+             #cmake --build build -j
