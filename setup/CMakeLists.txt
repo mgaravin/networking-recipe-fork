@@ -63,7 +63,7 @@ ExternalProject_Add(protobuf
   SOURCE_DIR
     ${CMAKE_SOURCE_DIR}/protobuf
   CMAKE_ARGS
-    -S ${CMAKE_SOURCE_DIR}/protobuf/cmake
+    -S cmake
     -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
     -DCMAKE_POSITION_INDEPENDENT_CODE=on
     -DBUILD_SHARED_LIBS=on
