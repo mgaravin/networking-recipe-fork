@@ -47,6 +47,8 @@ jobs:
   build_and_test:
     timeout-minutes: 100
     runs-on: ubuntu-latest
+    container:
+      image: fedora:33
     steps:
       - name: 'checkout p4-dpdk repo'
         uses: actions/checkout@v3
