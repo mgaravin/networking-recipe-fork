@@ -60,19 +60,12 @@ jobs:
         run: |
               sudo apt update -y
               python install_dep.py
-      - name: 'Compile p4sde dpdk target'
-        run: |
-             export SDE=${GITHUB_WORKSPACE}/p4sde
-             mkdir install
-             export SDE_INSTALL=${GITHUB_WORKSPACE}/p4sde/install
-             cd $SDE
-             ./autogen.sh
-             ./configure --prefix=$SDE_INSTALL
-             make 
-             make install
+      
       - name: 'checkout Networking Recipe'
         uses: actions/checkout@v3
         with:
+          repository: ipdk-io/networking-recipe
+          ref: drop3
           submodules: 'recursive'
           path: ipdk.recipe
       - name: 'Build and install infrap4d dependencies'
