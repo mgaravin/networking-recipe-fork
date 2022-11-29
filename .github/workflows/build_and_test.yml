@@ -49,5 +49,6 @@ jobs:
              cd $IPDK_RECIPE/setup
              mkdir -p $IPDK_RECIPE/deps
              cmake -B build -DCMAKE_INSTALL_PREFIX=$IPDK_RECIPE/deps -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DUSE_SUDO=ON
-             cmake --build build -j || exit 0
-             cd build && make VERBOSE=1 -j1
+             cmake --build build -j || true
+             cd build
+             make VERBOSE=1 -j1
