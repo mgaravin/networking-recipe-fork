@@ -52,7 +52,7 @@ jobs:
     steps:
       - name: "install git and submodules"
         run: |
-          dnf install git
+          dnf install git -y
       - name: 'checkout p4-dpdk repo'
         uses: actions/checkout@v3
         with:
