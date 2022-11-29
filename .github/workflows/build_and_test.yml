@@ -54,6 +54,8 @@ jobs:
         run: |
           dnf install git -y
           dnf install python -y
+          python3 --version
+          python --version
       - name: 'checkout p4-dpdk repo'
         uses: actions/checkout@v3
         with:
@@ -65,7 +67,7 @@ jobs:
         working-directory: ./p4sde/tools/setup
         run: |
               #sudo apt update -y
-              python install_dep.py
+              python3 install_dep.py
       
       - name: 'checkout Networking Recipe'
         uses: actions/checkout@v3
