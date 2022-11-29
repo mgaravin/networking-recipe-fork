@@ -50,6 +50,9 @@ jobs:
     container:
       image: fedora:33
     steps:
+      - name: "install git and submodules"
+        run: |
+          - dnf install git
       - name: 'checkout p4-dpdk repo'
         uses: actions/checkout@v3
         with:
@@ -60,7 +63,7 @@ jobs:
       - name: 'Install dependencies'
         working-directory: ./p4sde/tools/setup
         run: |
-              sudo apt update -y
+              #sudo apt update -y
               python install_dep.py
       
       - name: 'checkout Networking Recipe'
