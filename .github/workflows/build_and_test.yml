@@ -47,17 +47,7 @@ jobs:
   build_and_test:
     timeout-minutes: 100
     runs-on: ubuntu-latest
-    container:
-      image: fedora:33
     steps:
-      - name: "install git and submodules"
-        run: |
-          dnf install git -y
-          dnf install python -y
-          python3 --version
-          python --version
-          python -m pip install --upgrade pip
-          pip install sysutils
       - name: 'checkout p4-dpdk repo'
         uses: actions/checkout@v3
         with:
@@ -68,7 +58,7 @@ jobs:
       - name: 'Install dependencies'
         working-directory: ./p4sde/tools/setup
         run: |
-              #sudo apt update -y
+              sudo apt update -y
               python install_dep.py
       
       - name: 'checkout Networking Recipe'
@@ -84,5 +74,5 @@ jobs:
              export IPDK_RECIPE=`pwd`
              cd $IPDK_RECIPE/setup
              mkdir -p $IPDK_RECIPE/deps
-             cmake -B build -DCMAKE_INSTALL_PREFIX=$IPDK_RECIPE/deps -DUSE_SUDO=ON
-             cmake --build build -j 
+             cmake -B build -DCMAKE_INSTALL_PREFIX=$IPDK_RECIPE/deps -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
+             cmake --build build -j
