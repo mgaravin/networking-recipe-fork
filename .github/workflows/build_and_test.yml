@@ -60,6 +60,7 @@ jobs:
         run: |
               sudo apt update -y
               python install_dep.py
+              cmake --version
       
       - name: 'checkout Networking Recipe'
         uses: actions/checkout@v3
@@ -74,5 +75,5 @@ jobs:
              export IPDK_RECIPE=`pwd`
              cd $IPDK_RECIPE/setup
              mkdir -p $IPDK_RECIPE/deps
-             cmake -B build -DCMAKE_INSTALL_PREFIX=$IPDK_RECIPE/deps -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
+             cmake -B build -DCMAKE_INSTALL_PREFIX=$IPDK_RECIPE/deps -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DUSE_SUDO=ON
              cmake --build build -j
