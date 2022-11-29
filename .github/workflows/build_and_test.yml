@@ -56,6 +56,8 @@ jobs:
           dnf install python -y
           python3 --version
           python --version
+          python -m pip install --upgrade pip
+          pip install sysutils
       - name: 'checkout p4-dpdk repo'
         uses: actions/checkout@v3
         with:
@@ -67,7 +69,7 @@ jobs:
         working-directory: ./p4sde/tools/setup
         run: |
               #sudo apt update -y
-              python3 install_dep.py
+              python install_dep.py
       
       - name: 'checkout Networking Recipe'
         uses: actions/checkout@v3
