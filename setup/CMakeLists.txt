@@ -61,8 +61,8 @@ ExternalProject_Add(protobuf
 
   SOURCE_DIR
     ${CMAKE_SOURCE_DIR}/protobuf
-#  BINARY_DIR
-#    ${CMAKE_BINARY_DIR}/protobuf-prefix/src/protobuf-build
+  BINARY_DIR
+    ${CMAKE_BINARY_DIR}/protobuf-prefix/src/protobuf-build
   CMAKE_ARGS
     -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
     -DCMAKE_POSITION_INDEPENDENT_CODE=on
