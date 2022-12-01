@@ -27,15 +27,6 @@ jobs:
           repository: p4lang/p4-dpdk-target
           submodules: 'recursive'
           path: p4sde
-
-      - name: 'Install dependencies'
-        working-directory: ./p4sde/tools/setup
-        run: |
-              sudo apt update -y
-              python install_dep.py
-              sudo apt -y remove cmake
-              sudo apt-get install -y cmake=3.22.1-1ubuntu1.22.04.1
-              cmake --version
       
       - name: 'checkout Networking Recipe'
         uses: actions/checkout@v3
@@ -47,9 +38,6 @@ jobs:
 
       - name: 'Build and Configure infrap4d dependencies'
         run: |
-             sudo apt -y remove cmake=3.25
-             sudo ldconfig
-             sudo apt-get install -y cmake=3.22.1-1ubuntu1.22.04.1
              cd ${GITHUB_WORKSPACE}/ipdk.recipe
              export IPDK_RECIPE=`pwd`
              cd $IPDK_RECIPE/setup
@@ -57,9 +45,6 @@ jobs:
  
       - name: 'Execute infrap4d dependencies'
         run: |
-             sudo apt -y remove cmake=3.25
-             sudo ldconfig
-             sudo apt-get install -y cmake=3.22.1-1ubuntu1.22.04.1
              cd ${GITHUB_WORKSPACE}/ipdk.recipe
              export IPDK_RECIPE=`pwd`
              cd $IPDK_RECIPE/setup
