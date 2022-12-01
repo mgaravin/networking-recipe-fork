@@ -65,7 +65,8 @@ ExternalProject_Add(protobuf
     -DCMAKE_POSITION_INDEPENDENT_CODE=on
     -DBUILD_SHARED_LIBS=on
     -Dprotobuf_BUILD_TESTS=off
-  COMMAND pwd
+  COMMON echo "Printing current directory"
+  COMMAND echo `pwd`
   INSTALL_COMMAND
     ${SUDO_CMD} ${CMAKE_MAKE_PROGRAM} install
     ${LDCONFIG_CMD}
