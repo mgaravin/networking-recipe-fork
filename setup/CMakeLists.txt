@@ -57,11 +57,10 @@ set(PROTOBUF_GIT_TAG v3.18.1)
 ExternalProject_Add(protobuf
   GIT_REPOSITORY  https://github.com/google/protobuf.git
   GIT_TAG         ${PROTOBUF_GIT_TAG}
-  GIT_SHALLOW     ON    # depth=1
   GIT_PROGRESS    ON
 
   CMAKE_ARGS
-    -S ${CMAKE_SOURCE_DIR}/protobuf/cmake
+    -S ../protobuf/cmake
     -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
     -DCMAKE_POSITION_INDEPENDENT_CODE=on
     -DBUILD_SHARED_LIBS=on
