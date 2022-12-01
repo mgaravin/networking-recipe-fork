@@ -48,11 +48,11 @@ jobs:
              cd ${GITHUB_WORKSPACE}/ipdk.recipe
              export IPDK_RECIPE=`pwd`
              cd $IPDK_RECIPE/setup
-             cmake -B build -DCMAKE_INSTALL_PREFIX=$IPDK_RECIPE/deps -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DON_DEMAND=ON
+             cmake -B build -DCMAKE_INSTALL_PREFIX=$IPDK_RECIPE/deps -DON_DEMAND=ON
  
       - name: 'Execute infrap4d dependencies'
         run: |
              cd ${GITHUB_WORKSPACE}/ipdk.recipe
              export IPDK_RECIPE=`pwd`
              cd $IPDK_RECIPE/setup
-             cmake --build build -j1 --target protobuf
+             cmake --build build -j1 --target protobuf --verbose
