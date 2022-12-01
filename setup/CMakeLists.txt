@@ -61,15 +61,15 @@ ExternalProject_Add(protobuf
 
   SOURCE_DIR
     ${CMAKE_SOURCE_DIR}/protobuf
-  BINARY_DIR
-    ${CMAKE_BINARY_DIR}/protobuf-prefix/src/protobuf-build
+#  BINARY_DIR
+#    ${CMAKE_BINARY_DIR}/protobuf-prefix/src/protobuf-build
   CMAKE_ARGS
     -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
     -DCMAKE_POSITION_INDEPENDENT_CODE=on
     -DBUILD_SHARED_LIBS=on
     -Dprotobuf_BUILD_TESTS=off
-  SOURCE_SUBDIR
-    cmake
+#  SOURCE_SUBDIR
+#    cmake
   INSTALL_COMMAND
     ${SUDO_CMD} ${CMAKE_MAKE_PROGRAM} install
     ${LDCONFIG_CMD}
