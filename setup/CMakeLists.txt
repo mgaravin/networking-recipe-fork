@@ -52,7 +52,7 @@ endif()
 # PROTOBUF #
 ############
 
-set(PROTOBUF_GIT_TAG v3.18.1)
+set(PROTOBUF_GIT_TAG 0dab03ba7bc438d7ba3eac2b2c1eb39ed520f928)
 
 ExternalProject_Add(protobuf
   GIT_REPOSITORY  https://github.com/google/protobuf.git
@@ -65,6 +65,7 @@ ExternalProject_Add(protobuf
     -DCMAKE_POSITION_INDEPENDENT_CODE=on
     -DBUILD_SHARED_LIBS=on
     -Dprotobuf_BUILD_TESTS=off
+  COMMAND pwd
   INSTALL_COMMAND
     ${SUDO_CMD} ${CMAKE_MAKE_PROGRAM} install
     ${LDCONFIG_CMD}
