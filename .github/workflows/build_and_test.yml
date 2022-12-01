@@ -34,7 +34,7 @@ jobs:
               sudo apt update -y
               python install_dep.py
               sudo apt -y remove cmake
-              sudo apt-get install -y 3.16.3-1ubuntu1.22.04.1
+              sudo apt-get install -y 3.22.1-1ubuntu1.22.04.1
               cmake --version
       
       - name: 'checkout Networking Recipe'
