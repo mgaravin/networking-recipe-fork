@@ -60,13 +60,13 @@ ExternalProject_Add(protobuf
   GIT_PROGRESS    ON
 
   CMAKE_ARGS
-    -S ../protobuf/cmake
     -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
     -DCMAKE_POSITION_INDEPENDENT_CODE=on
     -DBUILD_SHARED_LIBS=on
     -Dprotobuf_BUILD_TESTS=off
-  COMMAND echo "Printing current directory"
-  COMMAND echo `pwd`
+ COMMAND pwd
+ SOURCE_SUBDIR
+    cmake
   INSTALL_COMMAND
     ${SUDO_CMD} ${CMAKE_MAKE_PROGRAM} install
     ${LDCONFIG_CMD}
@@ -74,6 +74,9 @@ ExternalProject_Add(protobuf
 if(ON_DEMAND)
   set_target_properties(protobuf PROPERTIES EXCLUDE_FROM_ALL TRUE)
 endif()
+
+ExternalProject_Get_property(protobuf BINARY_DIR)
+message("protobuf::BINARY_DIR = ${BINARY_DIR}")
 
 ########
 # GRPC #
