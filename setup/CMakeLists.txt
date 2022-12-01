@@ -68,6 +68,7 @@ ExternalProject_Add(protobuf
     -Dprotobuf_BUILD_TESTS=off
   SOURCE_SUBDIR
     cmake
+  BUILD_IN_SOURCE false
   INSTALL_COMMAND
     ${SUDO_CMD} ${CMAKE_MAKE_PROGRAM} install
     ${LDCONFIG_CMD}
