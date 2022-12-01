@@ -64,8 +64,7 @@ ExternalProject_Add(protobuf
     -DCMAKE_POSITION_INDEPENDENT_CODE=on
     -DBUILD_SHARED_LIBS=on
     -Dprotobuf_BUILD_TESTS=off
- COMMAND pwd
- SOURCE_SUBDIR
+  SOURCE_SUBDIR
     cmake
   INSTALL_COMMAND
     ${SUDO_CMD} ${CMAKE_MAKE_PROGRAM} install
