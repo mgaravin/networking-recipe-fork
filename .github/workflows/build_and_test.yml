@@ -55,4 +55,4 @@ jobs:
              cd ${GITHUB_WORKSPACE}/ipdk.recipe
              export IPDK_RECIPE=`pwd`
              cd $IPDK_RECIPE/setup
-             cmake --build build -j1 --target protobuf --verbose
+             cmake --build build -j1 --target protobuf --verbose --debug-output
