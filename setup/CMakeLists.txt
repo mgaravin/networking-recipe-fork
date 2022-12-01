@@ -75,7 +75,7 @@ if(ON_DEMAND)
 endif()
 
 ExternalProject_Get_property(protobuf BINARY_DIR)
-message("protobuf::BINARY_DIR = ${BINARY_DIR}")
+message(NOTICE "protobuf::BINARY_DIR = ${BINARY_DIR}")
 
 ########
 # GRPC #
