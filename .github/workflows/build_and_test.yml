@@ -48,5 +48,5 @@ jobs:
              export IPDK_RECIPE=`pwd`
              cd $IPDK_RECIPE/setup
              mkdir -p $IPDK_RECIPE/deps
-             cmake -B build -DCMAKE_INSTALL_PREFIX=$IPDK_RECIPE/deps -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
-             cmake --build build -j1
+             cmake -B build -DCMAKE_INSTALL_PREFIX=$IPDK_RECIPE/deps -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DON_DEMAND=ON
+             cmake --build build -j1 --target protobuf
