@@ -19,7 +19,7 @@ jobs:
 
   build_and_test:
     timeout-minutes: 100
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: 'checkout p4-dpdk repo'
         uses: actions/checkout@v3
@@ -41,11 +41,11 @@ jobs:
              cd ${GITHUB_WORKSPACE}/ipdk.recipe
              export IPDK_RECIPE=`pwd`
              cd $IPDK_RECIPE/setup
-             cmake -B build -DCMAKE_INSTALL_PREFIX=$IPDK_RECIPE/deps -DON_DEMAND=ON --trace-expand --debug-output
+             cmake -B build -DCMAKE_INSTALL_PREFIX=$IPDK_RECIPE/deps --trace-expand --debug-output
  
       - name: 'Execute infrap4d dependencies'
         run: |
              cd ${GITHUB_WORKSPACE}/ipdk.recipe
              export IPDK_RECIPE=`pwd`
              cd $IPDK_RECIPE/setup
-             cmake --build build -j1 --target protobuf --verbose --clean-first
+             cmake --build build -j1 --verbose --clean-first
