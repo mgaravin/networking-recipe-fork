@@ -33,7 +33,7 @@ jobs:
         run: |
               sudo apt update -y
               sudo apt install python python3-setuptools python3-pip python3-wheel python3-cffi sudo libssl-dev -y
-              python install_dep.py
+              python3 install_dep.py
       
       - name: 'checkout Networking Recipe'
         uses: actions/checkout@v3
