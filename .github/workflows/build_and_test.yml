@@ -19,7 +19,7 @@ jobs:
 
   build_and_test:
     timeout-minutes: 100
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: 'checkout p4-dpdk repo'
         uses: actions/checkout@v3
@@ -27,6 +27,12 @@ jobs:
           repository: p4lang/p4-dpdk-target
           submodules: 'recursive'
           path: p4sde
+
+      - name: 'Install dependencies'
+        working-directory: ./p4sde/tools/setup
+        run: |
+              sudo apt update -y
+              python install_dep.py
       
       - name: 'checkout Networking Recipe'
         uses: actions/checkout@v3
@@ -35,17 +41,12 @@ jobs:
           ref: drop3
           submodules: 'recursive'
           path: ipdk.recipe
-
-      - name: 'Build and Configure infrap4d dependencies'
+      - name: 'Build and install infrap4d dependencies'
         run: |
              cd ${GITHUB_WORKSPACE}/ipdk.recipe
+             df -h
              export IPDK_RECIPE=`pwd`
              cd $IPDK_RECIPE/setup
-             cmake -B build -DCMAKE_INSTALL_PREFIX=$IPDK_RECIPE/deps --trace-expand --debug-output
- 
-      - name: 'Execute infrap4d dependencies'
-        run: |
-             cd ${GITHUB_WORKSPACE}/ipdk.recipe
-             export IPDK_RECIPE=`pwd`
-             cd $IPDK_RECIPE/setup
-             cmake --build build -j1 --verbose --clean-first
+             mkdir -p $IPDK_RECIPE/deps
+             cmake -B build -DCMAKE_INSTALL_PREFIX=$IPDK_RECIPE/deps
+             cmake --build build
