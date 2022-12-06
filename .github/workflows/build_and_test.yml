@@ -19,7 +19,7 @@ jobs:
 
   build_and_test:
     timeout-minutes: 100
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: 'checkout p4-dpdk repo'
         uses: actions/checkout@v3
