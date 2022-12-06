@@ -31,9 +31,11 @@ jobs:
       - name: 'Install dependencies'
         working-directory: ./p4sde/tools/setup
         run: |
-              sudo apt update -y
+              sudo apt update -y 
               sudo apt install python python3-setuptools python3-pip python3-wheel python3-cffi sudo libssl-dev -y
+              pip3 install distro
               python3 install_dep.py
+              cmake --version
       
       - name: 'checkout Networking Recipe'
         uses: actions/checkout@v3
@@ -49,5 +51,5 @@ jobs:
              export IPDK_RECIPE=`pwd`
              cd $IPDK_RECIPE/setup
              mkdir -p $IPDK_RECIPE/deps
-             cmake -B build -DCMAKE_INSTALL_PREFIX=$IPDK_RECIPE/deps
+             cmake -B build -DCMAKE_INSTALL_PREFIX=$IPDK_RECIPE/deps -DUSE_SUDO=ON
              cmake --build build
