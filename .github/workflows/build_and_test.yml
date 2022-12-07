@@ -37,26 +37,13 @@ jobs:
               python3 install_dep.py
               cmake --version
               sudo apt-get purge cmake
+              cmake --version || true
               sudo apt install cmake
+              cmake --version
+              sudo apt-get purge cmake
+              sudo rm -rf ~/.local/bin/cmake
+              cmake --version || true
+              pip3 install cmake==3.20.2
+              cmake --version
       
-      - name: 'checkout Networking Recipe'
-        uses: actions/checkout@v3
-        with:
-          repository: ipdk-io/networking-recipe
-          ref: drop3
-          submodules: 'recursive'
-          path: ipdk.recipe
-
-      - name: 'Build and Configure infrap4d dependencies'
-        run: |
-             cd ${GITHUB_WORKSPACE}/ipdk.recipe
-             export IPDK_RECIPE=`pwd`
-             cd $IPDK_RECIPE/setup
-             cmake -B build -DCMAKE_INSTALL_PREFIX=$IPDK_RECIPE/deps --trace-expand --debug-output
- 
-      - name: 'Execute infrap4d dependencies'
-        run: |
-             cd ${GITHUB_WORKSPACE}/ipdk.recipe
-             export IPDK_RECIPE=`pwd`
-             cd $IPDK_RECIPE/setup
-             cmake --build build -j1 --verbose --clean-first
+     
