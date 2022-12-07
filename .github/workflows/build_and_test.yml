@@ -44,12 +44,17 @@ jobs:
           ref: drop3
           submodules: 'recursive'
           path: ipdk.recipe
-      - name: 'Build and install infrap4d dependencies'
+
+      - name: 'Build and Configure infrap4d dependencies'
         run: |
              cd ${GITHUB_WORKSPACE}/ipdk.recipe
-             df -h
              export IPDK_RECIPE=`pwd`
              cd $IPDK_RECIPE/setup
-             mkdir -p $IPDK_RECIPE/deps
-             cmake -B build -DCMAKE_INSTALL_PREFIX=$IPDK_RECIPE/deps -DUSE_SUDO=ON
-             cmake --build build
+             cmake -B build -DCMAKE_INSTALL_PREFIX=$IPDK_RECIPE/deps --trace-expand --debug-output
+ 
+      - name: 'Execute infrap4d dependencies'
+        run: |
+             cd ${GITHUB_WORKSPACE}/ipdk.recipe
+             export IPDK_RECIPE=`pwd`
+             cd $IPDK_RECIPE/setup
+             cmake --build build -j1 --verbose --clean-first
