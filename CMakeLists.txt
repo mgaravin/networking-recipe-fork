@@ -34,6 +34,7 @@ file(MAKE_DIRECTORY ${PROTO_OUT_DIR})
 #################
 
 option(WITH_STRATUM     "Build with Stratum" ON)
+option(WITH_OVSP4RT     "Build with OVS P4Runtime client" OFF)
 
 ############################
 # Target selection options #
@@ -48,7 +49,7 @@ option(TOFINO_TARGET    "Build for Tofino target" OFF)
 #   so we can use them to control the build.
 # - Default to TOFINO_TARGET.
 set(_target_action "Building")
-set(_default_target "TOFINO_TARGET")
+set(_default_target "DPDK_TARGET")
 if(TOFINO_TARGET)
     set(TARGETFLAG TOFINO_TARGET)
     set(DPDK_TARGET OFF)
@@ -103,7 +104,8 @@ endif()
 ##################
 
 if(DPDK_TARGET)
-    set(WITH_KRNLMON OFF)
+    set(WITH_KRNLMON ON)
+    set(WITH_OVSP4RT ON)
 endif()
 
 if(WITH_KRNLMON)
@@ -116,6 +118,6 @@ if(WITH_STRATUM)
 endif()
 
 add_subdirectory(infrap4d)
-if(WITH_KRNLMON)
+if(WITH_OVSP4RT)
     add_subdirectory(ovs-p4rt)
 endif()
