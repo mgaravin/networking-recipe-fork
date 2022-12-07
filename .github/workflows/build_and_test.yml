@@ -30,16 +30,17 @@ jobs:
       - name: 'Install dependencies'
         working-directory: ./p4sde/tools/setup
         run: |
-              sudo apt update -y 
-              sudo apt install python python3-setuptools python3-pip python3-wheel python3-cffi sudo libssl-dev -y
-              pip3 install distro
-              python3 install_dep.py
+              #sudo apt update -y 
+              #sudo apt install python python3-setuptools python3-pip python3-wheel python3-cffi sudo libssl-dev -y
+              #pip3 install distro
+              #python3 install_dep.py
               cmake --version
               sudo apt-get purge cmake
               cmake --version || true
               sudo rm -rf /usr/local/bin/cmake || true
               sudo rm -rf ~/.local/bin/cmake || true
               cmake --version || true
+              cd /tmp
               wget https://cmake.org/files/v3.20/cmake-3.20.2-linux-x86_64.sh
               chmod a+x cmake-3.20.2-Linux-x86_64.sh
               sudo mkdir -p /opt/rh/cmake
