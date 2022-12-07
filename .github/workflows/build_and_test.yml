@@ -40,10 +40,9 @@ jobs:
               sudo rm -rf /usr/local/bin/cmake || true
               sudo rm -rf ~/.local/bin/cmake || true
               cmake --version || true
-              cd /tmp
-              wget https://cmake.org/files/v3.20/cmake-3.20.2-linux-x86_64.sh
-              chmod a+x cmake-3.20.2-Linux-x86_64.sh
+              cd /tmp && wget https://cmake.org/files/v3.20/cmake-3.20.2-linux-x86_64.sh
+              cd /tmp && chmod a+x cmake-3.20.2-Linux-x86_64.sh
               sudo mkdir -p /opt/rh/cmake
-              sudo ./cmake-3.20.2-Linux-x86_64.sh --prefix=/opt/rh/cmake --skip-license
+              cd /tmp && sudo ./cmake-3.20.2-Linux-x86_64.sh --prefix=/opt/rh/cmake --skip-license
               sudo ln -s /opt/rh/cmake/bin/cmake /usr/local/bin/cmake
               cmake --version
