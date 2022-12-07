@@ -36,6 +36,8 @@ jobs:
               pip3 install distro
               python3 install_dep.py
               cmake --version
+              sudo apt-get purge cmake
+              sudo apt install cmake
       
       - name: 'checkout Networking Recipe'
         uses: actions/checkout@v3
