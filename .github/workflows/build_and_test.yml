@@ -52,7 +52,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: ipdk-io/networking-recipe
-          ref: drop3
+          ref: main
           submodules: 'recursive'
           path: ipdk.recipe
       - name: 'Compile p4sde dpdk target'
@@ -76,7 +76,23 @@ jobs:
  
       - name: 'Execute dpdk target build'
         run: |
-             cd $IPDK_RECIPE
+             cd ${GITHUB_WORKSPACE}/ipdk.recipe
              export SDE_INSTALL=${GITHUB_WORKSPACE}/install
              export DEPEND_INSTALL=${GITHUB_WORKSPACE}/deps
              ./make-all.sh --target=dpdk
+  py_bandit_test:
+     timeout-minutes: 10
+     runs-on: ubuntu-20.04
+     steps:
+       - name: 'checkout Networking Recipe'
+         uses: actions/checkout@v3
+         with:
+           repository: ipdk-io/networking-recipe
+           ref: main
+           path: ipdk.recipe
+       - name: 'Run Bandit Test'
+         uses: tj-actions/bandit@v5.1
+         with:
+           targets: |  # or a single string "."
+            ./ipdk.recipe/clients/p4rt-ctl/p4rt-ctl.in
+           options: "-v"
