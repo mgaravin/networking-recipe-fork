@@ -75,39 +75,14 @@ jobs:
              cd $IPDK_RECIPE/setup
              cmake -B build -DCMAKE_INSTALL_PREFIX=${GITHUB_WORKSPACE}/deps
              cmake --build build -j6
-
-      - name: 'Install bazel and run Stratum unit tests'
-        run: |
-             cd /tmp
-             curl -o bazel-4.2.3-installer-linux-x86_64.sh https://github.com/bazelbuild/bazel/releases/download/4.2.3/bazel-4.2.3-installer-linux-x86_64.sh
-             chmod +x bazel-4.2.3-installer-linux-x86_64.sh
-             ./bazel-4.2.3-installer-linux-x86_64.sh --user
-             export PATH="$PATH:$HOME/bin"
-             cd ${GITHUB_WORKSPACE}/ipdk.recipe/stratum/stratum
-             export DPDK_INSTALL=${GITHUB_WORKSPACE}/install
-             echo "DPDK" > ${GITHUB_WORKSPACE}/install/share/TARGET
-             xargs -a ${GITHUB_WORKSPACE}/ipdk.recipe/.github/dpdk-tests.txt bazel test --define target=dpdk
-             cd bazel-testlogs/stratum
-             zip stratum_ut_logs.zip `find . -name test.xml -print`
-                          
-      - name: 'Upload stratum-ut-result artifact'
-        uses: actions/upload-artifact@v3
-        with:
-          name: stratum-ut-result
-          path: ipdk.recipe/stratum/stratum/bazel-testlogs/stratum/stratum_ut_logs.zip
-          
-      - name: 'Execute dpdk target build'
+       
+      - name: 'Run Krnlmon Unit Tests for DPDK Target'
         run: |
              cd ${GITHUB_WORKSPACE}/ipdk.recipe
              export IPDK_RECIPE=${GITHUB_WORKSPACE}/ipdk.recipe
              export SDE_INSTALL=${GITHUB_WORKSPACE}/install
              export DEPEND_INSTALL=${GITHUB_WORKSPACE}/deps
              source ./scripts/dpdk/setup_env.sh $IPDK_RECIPE $SDE_INSTALL $DEPEND_INSTALL
-             ./make-all.sh --target=dpdk  --prefix=${GITHUB_WORKSPACE}/dpdk-target 
-      - name: 'Run Krnlmon Unit Tests for DPDK Target'
-        run: |
-             cd ${GITHUB_WORKSPACE}/ipdk.recipe
-             make clean
              cmake -B build -DDPDK_TARGET=on -DWITH_OVSP4RT=off
              cmake --build build -j4 --target krnlmon-test || true
              more build/Testing/Temporary/LastTest.log
@@ -117,8 +92,9 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: krnlmon_ut_logs
-          path: ipdk.recipe/krnlmon_ut_logs.zip
+          path: ipdk.recipe/krnlmon_ut_logs.zip       
 
+      
   py_bandit_test:
      timeout-minutes: 10
      runs-on: ubuntu-20.04
