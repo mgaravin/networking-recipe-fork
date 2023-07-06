@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - ipdk_v*
+      - split-gha  
   pull_request:
     branches:
       - main
@@ -103,7 +104,21 @@ jobs:
              export DEPEND_INSTALL=${GITHUB_WORKSPACE}/deps
              source ./scripts/dpdk/setup_env.sh $IPDK_RECIPE $SDE_INSTALL $DEPEND_INSTALL
              ./make-all.sh --target=dpdk  --prefix=${GITHUB_WORKSPACE}/dpdk-target 
-          
+      - name: 'Run Krnlmon Unit Tests for DPDK Target'
+        run: |
+             cd ${GITHUB_WORKSPACE}/ipdk.recipe
+             make clean
+             cmake -B build -DDPDK_TARGET=on -DWITH_OVSP4RT=off
+             cmake --build build -j4 --target krnlmon-test || true
+             more build/Testing/Temporary/LastTest.log
+             zip krnlmon_ut_logs.zip build/Testing/Temporary/LastTest.log
+
+      - name: 'Upload krnlmon-ut-result artifact'
+        uses: actions/upload-artifact@v3
+        with:
+          name: krnlmon_ut_logs
+          path: ipdk.recipe/krnlmon_ut_logs.zip
+
   py_bandit_test:
      timeout-minutes: 10
      runs-on: ubuntu-20.04
