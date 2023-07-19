@@ -3,4 +3,4 @@
 default: true
 
 # Do not allow multiple headings with the same content
-MD024: false
+MD024: true
