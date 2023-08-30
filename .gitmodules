@@ -13,7 +13,7 @@
 [submodule "stratum/stratum"]
 	path = stratum/stratum
 	url = https://github.com/ipdk-io/stratum-dev.git/
-	branch = split-arch
+	branch = grpc-v1.41.0
 [submodule "krnlmon/krnlmon"]
 	path = krnlmon/krnlmon
 	url = https://github.com/ipdk-io/krnlmon.git
