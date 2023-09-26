@@ -55,18 +55,19 @@ jobs:
         with:
           submodules: 'recursive'
           path: ipdk.recipe
-          
-      - name: 'Compile P4 dpdk target'
-        run: |
-             export SDE=${GITHUB_WORKSPACE}
-             mkdir install deps
-             export SDE_INSTALL=${GITHUB_WORKSPACE}/install
-             cd ${GITHUB_WORKSPACE}/p4sde
-             ./autogen.sh
-             ./configure --prefix=$SDE_INSTALL
-             make -j6
-             make install
 
+      - name: 'Download p4sde Artifact'
+        uses: actions/download-artifact@v3
+        with:
+          name: p4sde-dpdk-deps
+          path: ${GITHUB_WORKSPACE}
+
+      - name: 'extract p4sde package'
+        run: |
+            cd ${GITHUB_WORKSPACE}
+            mkdir -p ${GITHUB_WORKSPACE}/install
+            tar -xzvf p4sde_dpdk.tar.gz -C ${GITHUB_WORKSPACE}/install
+            
       - name: 'Build,Configure and Execute infrap4d dependencies'
         run: |
              cmake --version
@@ -142,7 +143,7 @@ jobs:
       - name: 'Download p4sde Artifact'
         uses: actions/download-artifact@v3
         with:
-          name: p4sde_dpdk.tar.gz
+          name: p4sde-dpdk-deps
           path: ${GITHUB_WORKSPACE}
 
       - name: 'extract p4sde package'
