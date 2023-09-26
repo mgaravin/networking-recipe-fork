@@ -26,11 +26,17 @@ jobs:
     container:
       image: ghcr.io/ipdk-io/ipdk-ubuntu2004-x86_64:ipdk_v23.07
     steps:
-      
+    
+      - name: 'update git'
+        run: |
+             sudo apt update -y
+             sudo apt install python python3-setuptools python3-pip python3-wheel python3-cffi sudo libssl-dev git zip libatomic1 libnl-route-3-dev curl tree -y
+             pip3 install distro
+             
       - name: 'Check Out Networking Recipe'
         uses: actions/checkout@v3
         with:
-          submodules: 'recursive'
+          submodules: 'recursive' 
           path: ipdk.recipe
             
       - name: 'Build,Configure and Execute infrap4d dependencies'
@@ -75,6 +81,12 @@ jobs:
     container:
       image: ghcr.io/ipdk-io/ipdk-ubuntu2004-x86_64:ipdk_v23.07
     steps:
+    
+      - name: 'update git'
+        run: |
+             sudo apt update -y
+             sudo apt install python python3-setuptools python3-pip python3-wheel python3-cffi sudo libssl-dev git zip libatomic1 libnl-route-3-dev curl tree -y
+             pip3 install distro
      
       - name: 'Check Out Networking Recipe'
         uses: actions/checkout@v3
