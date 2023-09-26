@@ -24,7 +24,7 @@ jobs:
     timeout-minutes: 100
     runs-on: ubuntu-latest
     container:
-      image: docker pull ghcr.io/ipdk-io/ipdk-ubuntu2004-x86_64:ipdk_v23.07
+      image: ghcr.io/ipdk-io/ipdk-ubuntu2004-x86_64:ipdk_v23.07
     steps:
       
       - name: 'Check Out Networking Recipe'
@@ -73,7 +73,7 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     container:
-      image: docker pull ghcr.io/ipdk-io/ipdk-ubuntu2004-x86_64:ipdk_v23.07
+      image: ghcr.io/ipdk-io/ipdk-ubuntu2004-x86_64:ipdk_v23.07
     steps:
      
       - name: 'Check Out Networking Recipe'
