@@ -32,6 +32,16 @@ jobs:
              sudo apt update -y
              sudo apt install python python3-setuptools python3-pip python3-wheel python3-cffi sudo libssl-dev git zip libatomic1 libnl-route-3-dev curl tree -y
              pip3 install distro
+             sudo apt-get purge cmake
+             sudo rm -rf /usr/local/bin/cmake || true
+             sudo rm -rf ~/.local/bin/cmake || true
+              # removing cmake 3.25 and reinstalling 3.20, as build is failing with cmake 3.25
+             wget https://cmake.org/files/v3.20/cmake-3.20.2-linux-x86_64.sh -O ${GITHUB_WORKSPACE}/cmake-3.20.2-linux-x86_64.sh
+             chmod a+x ${GITHUB_WORKSPACE}/cmake-3.20.2-linux-x86_64.sh
+             sudo mkdir -p /opt/rh/cmake
+             cd ${GITHUB_WORKSPACE} && sudo sh cmake-3.20.2-linux-x86_64.sh --prefix=/opt/rh/cmake --skip-license
+             sudo ln -s /opt/rh/cmake/bin/cmake /usr/local/bin/cmake
+             cmake --version
              
       - name: 'Check Out Networking Recipe'
         uses: actions/checkout@v3
@@ -87,6 +97,16 @@ jobs:
              sudo apt update -y
              sudo apt install python python3-setuptools python3-pip python3-wheel python3-cffi sudo libssl-dev git zip libatomic1 libnl-route-3-dev curl tree -y
              pip3 install distro
+             sudo apt-get purge cmake
+             sudo rm -rf /usr/local/bin/cmake || true
+             sudo rm -rf ~/.local/bin/cmake || true
+              # removing cmake 3.25 and reinstalling 3.20, as build is failing with cmake 3.25
+             wget https://cmake.org/files/v3.20/cmake-3.20.2-linux-x86_64.sh -O ${GITHUB_WORKSPACE}/cmake-3.20.2-linux-x86_64.sh
+             chmod a+x ${GITHUB_WORKSPACE}/cmake-3.20.2-linux-x86_64.sh
+             sudo mkdir -p /opt/rh/cmake
+             cd ${GITHUB_WORKSPACE} && sudo sh cmake-3.20.2-linux-x86_64.sh --prefix=/opt/rh/cmake --skip-license
+             sudo ln -s /opt/rh/cmake/bin/cmake /usr/local/bin/cmake
+             cmake --version
      
       - name: 'Check Out Networking Recipe'
         uses: actions/checkout@v3
