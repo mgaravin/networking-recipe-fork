@@ -54,9 +54,11 @@ jobs:
              make -j6
              make install
              tar -czvf p4sde_dpdk.tar.gz -C $SDE_INSTALL .
+             mv p4sde_dpdk.tar.gz ${GITHUB_WORKSPACE}/
+             ls -ltr ${GITHUB_WORKSPACE}
     
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v3
         with:
-          name: p4sde_dpdk.tar.gz
-          path: ${GITHUB_WORKSPACE}/p4sde/p4sde_dpdk.tar.gz
+          name: p4sde-dpdk-deps
+          path: p4sde_dpdk.tar.gz
