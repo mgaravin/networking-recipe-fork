@@ -4,7 +4,11 @@ on:
   workflow_dispatch:
     branches:
       - main
-      - dev/mgaravin/buildtime  
+      - dev/mgaravin/buildtime
+  push:
+    branches:
+      - main
+      - dev/mgaravin/buildtime            
   schedule:
     - cron: '0 0 * * *'
 
