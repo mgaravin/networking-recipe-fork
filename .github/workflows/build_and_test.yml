@@ -30,8 +30,12 @@ jobs:
       - name: 'update git'
         run: |
              sudo apt update -y
-             sudo apt install python python3-setuptools python3-pip python3-wheel python3-cffi sudo libssl-dev git zip libatomic1 libnl-route-3-dev curl tree wget -y
+             sudo apt install python python3-setuptools python3-pip python3-wheel python3-cffi sudo libssl-dev git zip libatomic1 libnl-route-3-dev curl tree wget cmake -y
              pip3 install distro
+             cmake --version
+             sudo apt-get purge cmake
+             sudo rm -rf /usr/local/bin/cmake || true
+             sudo rm -rf ~/.local/bin/cmake || true
              wget https://cmake.org/files/v3.20/cmake-3.20.2-linux-x86_64.sh -O ${GITHUB_WORKSPACE}/cmake-3.20.2-linux-x86_64.sh
              chmod a+x ${GITHUB_WORKSPACE}/cmake-3.20.2-linux-x86_64.sh
              sudo mkdir -p /opt/rh/cmake
