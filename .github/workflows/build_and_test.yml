@@ -24,7 +24,7 @@ jobs:
     timeout-minutes: 100
     runs-on: ubuntu-latest
     container:
-      image: docker pull ghcr.io/mgaravin/p4sde-dpdk/ubuntu2004:sha-f84b0ea
+      image: ghcr.io/mgaravin/p4sde-dpdk/ubuntu2004:sha-f84b0ea
     steps:
              
       - name: 'Check Out Networking Recipe'
@@ -73,7 +73,7 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     container:
-      image: docker pull ghcr.io/mgaravin/p4sde-dpdk/ubuntu2004:sha-f84b0ea
+      image: ghcr.io/mgaravin/p4sde-dpdk/ubuntu2004:sha-f84b0ea
     steps:
      
       - name: 'Check Out Networking Recipe'
