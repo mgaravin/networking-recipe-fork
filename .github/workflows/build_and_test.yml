@@ -57,7 +57,7 @@ jobs:
              export PATH="$PATH:$HOME/bin"
              cd ${GITHUB_WORKSPACE}/ipdk.recipe/stratum/stratum
              export DPDK_INSTALL=/opt/p4sde/install
-             echo "DPDK" > /root/p4-sde/install/share/TARGET
+             echo "DPDK" > /root/p4sde/install/share/TARGET
              xargs -a ${GITHUB_WORKSPACE}/ipdk.recipe/.github/dpdk-tests.txt bazel test --define target=dpdk
              cd bazel-testlogs/stratum
              zip stratum_ut_logs.zip `find . -name test.xml -print`
