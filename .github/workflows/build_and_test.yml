@@ -20,38 +20,38 @@ permissions: read-all
 
 jobs:
 
-  build_and_stratum_ut_dpdk_target:
+  build_dpdk_target:
     timeout-minutes: 100
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/mgaravin/p4sde-dpdk/ubuntu2004:sha-f84b0ea
+      image: ghcr.io/mgaravin/p4sde-dpdk/ubuntu2004:sha-e8148bf
     steps:
-
-      - name: 'Install dependencies'
-        run: |
-              apt update -y
-              apt install python python3-setuptools python3-pip python3-wheel python3-cffi sudo libssl-dev git zip libatomic1 libnl-route-3-dev curl wget tree unzip -y
-              pip3 install distro
-              cd /tmp
-              wget https://github.com/bazelbuild/bazel/releases/download/4.2.3/bazel-4.2.3-installer-linux-x86_64.sh
-              chmod +x bazel-4.2.3-installer-linux-x86_64.sh
-              ./bazel-4.2.3-installer-linux-x86_64.sh
-              bazel --version
-                 
       - name: 'Check Out Networking Recipe'
         uses: actions/checkout@v3
         with:
           submodules: 'recursive' 
           path: ipdk.recipe
-            
-      - name: 'Build,Configure and Execute infrap4d dependencies'
+          
+      - name: 'Execute dpdk target build'
         run: |
-             cmake --version
              cd ${GITHUB_WORKSPACE}/ipdk.recipe
-             export IPDK_RECIPE=`pwd`
-             cd $IPDK_RECIPE/setup
-             cmake -B build -DCMAKE_INSTALL_PREFIX=${GITHUB_WORKSPACE}/deps
-             cmake --build build -j6
+             export SDE_INSTALL=/opt/p4sde/install
+             export DEPEND_INSTALL=/opt/networking-recipe-deps
+             ./make-all.sh --target=dpdk --prefix=${GITHUB_WORKSPACE}/dpdk-target    
+  
+
+  build_and_stratum_ut_dpdk_target:
+    timeout-minutes: 100
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/mgaravin/p4sde-dpdk/ubuntu2004:sha-e8148bf
+    steps:
+
+      - name: 'Check Out Networking Recipe'
+        uses: actions/checkout@v3
+        with:
+          submodules: 'recursive' 
+          path: ipdk.recipe
 
       - name: 'Install bazel and run Stratum unit tests'
         run: |          
@@ -67,47 +67,25 @@ jobs:
         with:
           name: stratum-ut-result
           path: ipdk.recipe/stratum/stratum/bazel-testlogs/stratum/stratum_ut_logs.zip
-          
-      - name: 'Execute dpdk target build'
-        run: |
-             cd ${GITHUB_WORKSPACE}/ipdk.recipe
-             export SDE_INSTALL=/opt/p4sde/install
-             export DEPEND_INSTALL=${GITHUB_WORKSPACE}/deps
-             ./make-all.sh --target=dpdk --prefix=${GITHUB_WORKSPACE}/dpdk-target
 
   build_and_krnlmon_ut_dpdk_target:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/mgaravin/p4sde-dpdk/ubuntu2004:sha-f84b0ea
+      image: ghcr.io/mgaravin/p4sde-dpdk/ubuntu2004:sha-e8148bf
     steps:
-      - name: 'Install dependencies'
-        run: |
-              sudo apt update -y
-              sudo apt install python python3-setuptools python3-pip python3-wheel python3-cffi sudo libssl-dev git zip libatomic1 libnl-route-3-dev curl tree -y
-              pip3 install distro
-     
       - name: 'Check Out Networking Recipe'
         uses: actions/checkout@v3
         with:
           submodules: 'recursive'
           path: ipdk.recipe
 
-      - name: 'Build,Configure and Execute infrap4d dependencies'
-        run: |
-             cmake --version
-             cd ${GITHUB_WORKSPACE}/ipdk.recipe
-             export IPDK_RECIPE=`pwd`
-             cd $IPDK_RECIPE/setup
-             cmake -B build -DCMAKE_INSTALL_PREFIX=${GITHUB_WORKSPACE}/deps
-             cmake --build build -j6
-
       - name: 'Run Krnlmon Unit Tests for DPDK Target'
         run: |
              cd ${GITHUB_WORKSPACE}/ipdk.recipe
              export IPDK_RECIPE=${GITHUB_WORKSPACE}/ipdk.recipe
              export SDE_INSTALL=/opt/p4sde/install
-             export DEPEND_INSTALL=${GITHUB_WORKSPACE}/deps
+             export DEPEND_INSTALL=/opt/networking-recipe-deps
              cmake -B build -DDPDK_TARGET=on -DWITH_OVSP4RT=off
              cmake --build build -j4 --target krnlmon-test || true
              cat build/Testing/Temporary/LastTest.log
