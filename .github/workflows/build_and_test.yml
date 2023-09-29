@@ -29,10 +29,15 @@ jobs:
 
       - name: 'Install dependencies'
         run: |
-              sudo apt update -y
-              sudo apt install python python3-setuptools python3-pip python3-wheel python3-cffi sudo libssl-dev git zip libatomic1 libnl-route-3-dev curl tree -y
+              apt update -y
+              apt install python python3-setuptools python3-pip python3-wheel python3-cffi sudo libssl-dev git zip libatomic1 libnl-route-3-dev curl wget tree unzip -y
               pip3 install distro
-             
+              cd /tmp
+              wget https://github.com/bazelbuild/bazel/releases/download/4.2.3/bazel-4.2.3-installer-linux-x86_64.sh
+              chmod +x bazel-4.2.3-installer-linux-x86_64.sh
+              ./bazel-4.2.3-installer-linux-x86_64.sh
+              bazel --version
+                 
       - name: 'Check Out Networking Recipe'
         uses: actions/checkout@v3
         with:
@@ -49,12 +54,7 @@ jobs:
              cmake --build build -j6
 
       - name: 'Install bazel and run Stratum unit tests'
-        run: |
-             cd /tmp
-             curl -o bazel-4.2.3-installer-linux-x86_64.sh https://github.com/bazelbuild/bazel/releases/download/4.2.3/bazel-4.2.3-installer-linux-x86_64.sh
-             chmod +x bazel-4.2.3-installer-linux-x86_64.sh
-             ./bazel-4.2.3-installer-linux-x86_64.sh --user
-             export PATH="$PATH:$HOME/bin"
+        run: |          
              cd ${GITHUB_WORKSPACE}/ipdk.recipe/stratum/stratum
              export DPDK_INSTALL=/opt/p4sde/install
              echo "DPDK" > /opt/p4sde/install/share/TARGET
